@@ -55,8 +55,7 @@ int number_guessing(int max_answer, int max_count)
 {
 	printf("数を当ててね♥　チャンスは %d回 まで♠\n",max_count);
 	
-	srand(time(NULL));
-	int ANSWER=rand() % 6 + 1;
+	int ANSWER=rand() % max_answer + 1;
 	int i=1,num,continue_game;
 				
 	while(1){
@@ -83,7 +82,7 @@ int number_guessing(int max_answer, int max_count)
 		else{
 			printf("はずれ♦　それより小さいよ♣\n");
 			i++;
-			if(i>=4){
+			if(i>max_count){
 				printf("\n残念♠　%d回で当てられなかったのでゲームオーバー♣\n",max_count);
 				printf("答えは%dでした♦\n",ANSWER);
 				break;
