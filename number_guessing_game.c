@@ -8,25 +8,39 @@ int number_guessing(int max_answer, int max_count);
 int main(void)
 {
     int ANSWER,num=0,continue_game=1,level,i;
+	char game_name[4][30] = {
+		"初級 サイコロ数当て",
+		"中級 トランプ数当て",
+		"上級 100までの数当て",
+		"達人 1000までの数当て",
+	};
     
 	srand(time(NULL));
+	
+	printf("\n◆◆ 数当てゲーム ◆◆");
+	for(i=0;i<4;i++) printf("\n%d：%s",i+1,game_name[i]);   //ゲーム数変更の場合修正が必要
 	
     level = choose_level();
     
     switch(level){
 		case 1:
-			printf("\n\n♢♢初級　サイコロ数当て　♢♢\n");
+			printf("\n\n♢♢　%s　♢♢\n",game_name[0]);
 			while(continue_game) continue_game = number_guessing(6, 3);
 			break;
 			
 		case 2:
-			printf("\n\n♢♢中級　トランプ数当て　♢♢\n");
+			printf("\n\n♢♢　%s　♢♢\n",game_name[1]);
 			while(continue_game) continue_game = number_guessing(13, 5);
             break;
 		
 		case 3:
-			printf("\n\n♢♢上級　100までの数当て　♢♢\n");
+			printf("\n\n♢♢　%s　♢♢\n",game_name[2]);
 			while(continue_game) continue_game = number_guessing(100, 7);
+			break;
+			
+		case 4:
+			printf("\n\n♢♢　%s　♢♢\n",game_name[3]);
+			while(continue_game) continue_game = number_guessing(1000, 10);
 			break;
 			
         default:
@@ -39,12 +53,8 @@ int main(void)
 
 int choose_level()
 {
-	int level;
+	int level,i;
 	
-	printf("\n◆◆ 数当てゲーム ◆◆");
-    printf("\n１：初級 サイコロ数当て");
-    printf("\n２：中級 トランプ数当て");
-    printf("\n３：上級 100までの数当て");
     printf("\nレベルを選んでね♠：");
     scanf("%d",&level);
 	
@@ -58,7 +68,7 @@ int number_guessing(int max_answer, int max_count)
 	int ANSWER=rand() % max_answer + 1;
 	int i=1,num,continue_game;
 				
-	while(1){
+	while(i<=max_count){
 		printf("\n==　%d回目のチャレンジ　==\n",i);
 		printf("1 ～ %d のどれでしょう？：",max_answer);
 		scanf("%d",&num);
@@ -70,27 +80,18 @@ int number_guessing(int max_answer, int max_count)
 					
 		else if(num<ANSWER){
 			printf("はずれ♦　それより大きいよ♠\n");
-			i++;
-			if(i>max_count){
-			printf("\n残念♠　%d回で当てられなかったのでゲームオーバー♣\n",max_count);
-			printf("答えは%dでした♦\n",ANSWER);
-			break;
-			}
-			else continue;
 		}
 		
 		else{
 			printf("はずれ♦　それより小さいよ♣\n");
-			i++;
-			if(i>max_count){
-				printf("\n残念♠　%d回で当てられなかったのでゲームオーバー♣\n",max_count);
-				printf("答えは%dでした♦\n",ANSWER);
-				break;
-			}
-			else continue;
 		}
+        i++;
 	}
-	
+    
+    if(i>max_count){
+		printf("\n残念♠　%d回で当てられなかったのでゲームオーバー♣\n",max_count);
+		printf("答えは%dでした♦\n",ANSWER);
+	}
 	printf("\nゲームを続ける？（つづける:1　終了:0）：");
 	scanf("%d",&continue_game);
 		
